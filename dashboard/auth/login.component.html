@@ -1,0 +1,26 @@
+<div class="login-wrapper">
+  <form class="login-card" (ngSubmit)="onSubmit()">
+    <h2>Task Manager</h2>
+    <p class="subtitle">Sign in to continue</p>
+
+    <input
+      type="email"
+      name="email"
+      placeholder="Email"
+      [(ngModel)]="email"
+      required
+    />
+
+    <input
+      type="password"
+      name="password"
+      placeholder="Password"
+      [(ngModel)]="password"
+      required
+    />
+
+    <button type="submit" [disabled]="loading">
+      {{ loading ? 'Logging in...' : 'Login' }}
+    </button>
+  </form>
+</div>

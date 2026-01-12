@@ -2,11 +2,13 @@
   "compileOnSave": false,
   "compilerOptions": {
     "rootDir": ".",
+    "types": ["node"],
     "sourceMap": true,
     "declaration": false,
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
+    "useDefineForClassFields": false,
     "importHelpers": true,
     "target": "es2015",
     "module": "esnext",
