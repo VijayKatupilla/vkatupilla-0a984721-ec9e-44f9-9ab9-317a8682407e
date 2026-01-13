@@ -133,13 +133,6 @@ http://localhost:3000/api
 
 ---
 
-## 🎥 Video Submission
-
-A short explanation video (under 10 minutes) is included separately as per submission guidelines.  
-The video explains architecture, authentication, authorization, and task flow.
-
----
-
 ## ✅ Notes
 
 - No sensitive files are committed
