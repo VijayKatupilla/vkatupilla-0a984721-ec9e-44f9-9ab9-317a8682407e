@@ -1,76 +1,156 @@
-# Vkatupilla0a984721Ec9e44f99ab9317a8682407e
+# Turbovets Backend Assignment
 
-<a alt="Nx logo" href="https://nx.dev" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="45"></a>
+This repository contains the backend API implementation for the Turbovets technical assignment.  
+The project is built using **NestJS**, **Nx workspace**, **TypeORM**, and **SQLite**, with a focus on clean architecture, security, and role-based access control.
 
-✨ Your new, shiny [Nx workspace](https://nx.dev) is almost ready ✨.
+---
 
-Run `npx nx graph` to visually explore what got created. Now, let's get you up to speed!
+## 🚀 Tech Stack
 
-## Finish your remote caching setup
+- **Node.js**
+- **NestJS**
+- **Nx Monorepo**
+- **TypeORM**
+- **SQLite**
+- **JWT Authentication**
+- **Role-Based Authorization**
 
-[Click here to finish setting up your workspace!](https://cloud.nx.app/connect/IlkhHS9rSL)
+---
 
+## 📁 Project Structure
 
-## Run tasks
-
-To run tasks with Nx use:
-
-```sh
-npx nx <target> <project-name>
-```
-
-For example:
-
-```sh
-npx nx build myproject
-```
-
-These targets are either [inferred automatically](https://nx.dev/concepts/inferred-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) or defined in the `project.json` or `package.json` files.
-
-[More about running tasks in the docs &raquo;](https://nx.dev/features/run-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-## Add new projects
-
-While you could add new projects to your workspace manually, you might want to leverage [Nx plugins](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) and their [code generation](https://nx.dev/features/generate-code?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) feature.
-
-To install a new plugin you can use the `nx add` command. Here's an example of adding the React plugin:
-```sh
-npx nx add @nx/react
-```
-
-Use the plugin's generator to create new projects. For example, to create a new React app or library:
-
-```sh
-# Generate an app
-npx nx g @nx/react:app demo
-
-# Generate a library
-npx nx g @nx/react:lib some-lib
-```
-
-You can use `npx nx list` to get a list of installed plugins. Then, run `npx nx list <plugin-name>` to learn about more specific capabilities of a particular plugin. Alternatively, [install Nx Console](https://nx.dev/getting-started/editor-setup?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) to browse plugins and generators in your IDE.
-
-[Learn more about Nx plugins &raquo;](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) | [Browse the plugin registry &raquo;](https://nx.dev/plugin-registry?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+api/
+└── src/
+├── app/ # Root app module
+├── auth/ # Authentication & JWT logic
+├── tasks/ # Task CRUD operations
+├── audit/ # Audit logging
+├── entities/ # Database entities
+├── roles/ # Role decorators & guards
+├── main.ts # Application entry point
+└── seed.ts # Database seed script
 
 
-[Learn more about Nx on CI](https://nx.dev/ci/intro/ci-with-nx#ready-get-started-with-your-provider?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+Each feature is organized as a separate module following NestJS best practices.
 
-## Install Nx Console
+---
 
-Nx Console is an editor extension that enriches your developer experience. It lets you run tasks, generate code, and improves code autocompletion in your IDE. It is available for VSCode and IntelliJ.
+## 🔐 Authentication
 
-[Install Nx Console &raquo;](https://nx.dev/getting-started/editor-setup?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+- Authentication is implemented using **JWT**
+- Login endpoint returns an access token
+- All protected routes require the token in the header
 
-## Useful links
+**Header format:**
 
-Learn more:
 
-- [Learn about Nx on CI](https://nx.dev/ci/intro/ci-with-nx?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Releasing Packages with Nx release](https://nx.dev/features/manage-releases?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [What are Nx plugins?](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+---
 
-And join the Nx community:
-- [Discord](https://go.nx.dev/community)
-- [Follow us on X](https://twitter.com/nxdevtools) or [LinkedIn](https://www.linkedin.com/company/nrwl)
-- [Our Youtube channel](https://www.youtube.com/@nxdevtools)
-- [Our blog](https://nx.dev/blog?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+## 👤 Roles & Authorization
+
+The system supports role-based access control:
+
+- **OWNER**
+- **ADMIN**
+- **VIEWER**
+
+Access rules:
+- OWNER & ADMIN → create, update, delete tasks
+- VIEWER → read-only access
+- Authorization is enforced using custom guards and decorators
+
+---
+
+## 📌 API Endpoints
+
+### Auth
+- `POST /api/auth/login` – User login, returns JWT token
+
+### Tasks
+- `POST /api/tasks` – Create task (OWNER, ADMIN)
+- `GET /api/tasks` – Get tasks
+- `PUT /api/tasks/:id` – Update task (OWNER, ADMIN)
+- `DELETE /api/tasks/:id` – Delete task (OWNER, ADMIN)
+
+### Audit Logs
+- `GET /api/audit-log` – View audit logs
+
+---
+
+## 🗄 Database
+
+- Uses **SQLite** for simplicity
+- Managed via **TypeORM**
+- Entities include:
+  - User
+  - Role
+  - Organization
+  - Task
+  - AuditLog
+
+All relationships are properly defined using TypeORM decorators.
+
+---
+
+## 📝 Audit Logging
+
+Every important action is logged:
+- CREATE_TASK
+- UPDATE_TASK
+- DELETE_TASK
+
+Audit logs store:
+- Action name
+- User ID
+- Role
+- Task ID
+
+This helps in tracking activity and debugging.
+
+---
+
+## ▶️ Running the Project
+
+### 1. Install dependencies
+
+### 2. Start the API
+
+### 2. Start the API
+
+### 3. API URL
+
+http://localhost:3000/api
+
+
+---
+
+## 🧪 Testing with Thunder Client / Postman
+
+1. Call `/api/auth/login` with email & password
+2. Copy the returned JWT token
+3. Add token to Authorization header
+4. Test task and audit endpoints
+
+---
+
+## 🎥 Video Submission
+
+A short explanation video (under 10 minutes) is included separately as per submission guidelines.  
+The video explains architecture, authentication, authorization, and task flow.
+
+---
+
+## ✅ Notes
+
+- No sensitive files are committed
+- SQLite database file is excluded from GitHub
+- Code follows clean and modular architecture
+- Proper error handling and guards are implemented
+
+---
+
+## 🙌 Final Words
+
+This project demonstrates backend fundamentals including authentication, authorization, modular design, and audit logging using NestJS.
+
+Thank you for reviewing my submission.
